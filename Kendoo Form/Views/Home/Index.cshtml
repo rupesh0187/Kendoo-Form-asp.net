@@ -1,0 +1,259 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Kendo Form</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-ocean-blue.css"/>
+    <base href="https://demos.telerik.com/kendo-ui/checkboxgroup/index">
+ <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/jquery.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div class="container " ><h1 class="text-center"><strong><u>Employee Entry Form</u></strong></h1>
+       <form id="form" onsubmit="Employee();" method="post">
+         <div class=" k-d-flex  k-flex-col k-justify-content-center k-border-t-warning   " style="margin-top: 54px;">
+            <div class="row">
+               
+                <input id="textbox" class="k-border-y-warning k-border-solid k-border-primary k-bg-warning  form-control"/>
+            </div>
+
+            <div>
+                <input id="textbox1" class="k-border-y-warning k-border-solid k-border-primary k-bg-warning"/>
+            </div>
+
+            <div>
+                <textarea id="textarea" ></textarea>
+
+            </div>
+
+            <div class="col-3">
+
+                <input id="datePicker" />
+
+            </div>
+
+            <div>
+
+                <input  id="datetimepicker" title="datetimepicker"/>
+
+            </div>
+
+            <div>
+
+                <input  id="colorpicker" title="colorpicker"/>
+
+            </div>
+
+            <div>
+                <input id="datetimepicker1" title="datetimepicker"/>
+
+            </div>
+
+            <br />
+
+            <div>
+                <label><b>Gender</b></label>
+               <ul id="radiogroup"></ul>
+            </div>
+            <br />
+            <div>
+                <select id="dropdownlist"></select>
+            </div>
+            <br />
+            <div >
+                <button class="btn btn-primary  text-lg-center bg-primary p-1 text-center text-white" id="textButton" onclick="Employee()" type="button">Submit</button>
+                <br />
+                <br />
+
+                <button class="btn btn-primary  text-lg-center bg-primary p-1 text-center text-white" type="reset" value="Reset">Reset</button>   
+            </div>
+            <br />
+            <br />
+
+            <div id="tbl1">
+            <table  id="tbl" class="table table-bordered-9 text-lg-center " border="1">
+            <thead >
+                <tr>
+                 <th>Employee First Name</th>
+                 <th>Employee  Surname</th>
+                 <th>Employee Address</th>
+                 <th>Employee D.O.B</th>
+                 <th>Employee Entry Time</th>
+                 <th>Employee Exit Time</th>
+                 <th>Gender</th>
+                 <th>Technology</th>
+                </tr>
+            <thead>
+            <tbody>
+
+
+            </tbody>
+            </table>
+            </div>
+          </div>
+       </form>
+    </div>
+  <script>
+    
+        $("#textbox").kendoTextBox({
+            value: "",
+            fillMode: "flat",
+            label: {
+            content: "<strong>First name</strong>",
+            floating: true, 
+            }
+        });
+        $("#textbox1").kendoTextBox({
+            value: "",
+            fillMode: "flat",
+            label: {
+            content: "<strong>Surname</strong>",
+            floating: true, 
+            }
+        });
+        $("#textarea").kendoTextArea({
+            value: "",
+            size:"large",
+            fillMode: "solid",
+            resize:"both",
+            label: {
+            content: "<strong>Address:<strong>",
+            floating: true
+            }
+        });
+        $("#datePicker").kendoDatePicker({        
+                value: "",
+                size:"large ",
+                format: "yyyy-MM-dd",
+                label:{
+                content:"Date Of Birth",
+                floating: true
+                }
+        });
+
+        $("#colorpicker").kendoColorPicker({
+          
+            change:BGChange
+
+        });
+        function BGChange(e){
+            var tbl = document.getElementById("tbl1");
+            tbl.style.backgroundColor = e.value;
+        }
+        $("#datetimepicker").kendoDateTimePicker({
+                value:  "",
+
+                format: "MM/dd/yyyy hh:mm tt ",
+                label:{
+                content:"Office Arrival",
+                floating: true
+                }
+        });
+        $("#datetimepicker1").kendoDateTimePicker({
+            value:  "",
+
+            format: "MM/dd/yyyy hh:mm tt ",
+            label:{
+                content:"Office Departure",
+                floating: true
+                }
+        });
+        let data = [
+            {ID: 1, LanguageName: "DOT NET" },
+            {ID: 2, LanguageName: "JAVA" },
+            {ID: 3, LanguageName: "PYTHON"},
+            {ID: 4, LanguageName: "REACT" },
+            {ID: 5, LanguageName: "C++" }
+        ];
+        $("#dropdownlist").kendoDropDownList({
+            dataTextField:"LanguageName",
+            dataValueField:"ID",
+            height: "500px",
+            dataSource: data,
+            filter:"contains",
+            label:"Technology",
+            floating: false
+            
+        }); 
+        $("#radiogroup").kendoRadioGroup({
+            enabled: true,
+            items: [ {
+                value: "Gender",
+                label: "Male"
+            },{
+                value: "Gender",
+                label: "Female"
+            },{
+                value: "Gen",
+                label: "Others"
+            }],
+            layout: "horizontal",
+
+        });
+
+         
+         
+        
+        function Employee()
+        {
+            var FirstName=document.getElementById("textbox").value;
+            var Surname=document.getElementById("textbox1").value;
+            var Address=document.getElementById("textarea").value;
+            var DOB=document.getElementById("datePicker").value;
+            var Entry=document.getElementById("datetimepicker").value;
+            var Exit=document.getElementById("datetimepicker1").value;
+            var Gender=document.getElementById("radiogroup").value;
+            
+            
+            var Technology=data[document.getElementById("dropdownlist").value - 1].LanguageName;
+            
+
+
+            var tr=document.createElement('tr');
+
+            var td1=tr.appendChild(document.createElement('td'));
+            var td2=tr.appendChild(document.createElement('td'));
+            var td3=tr.appendChild(document.createElement('td'));
+            var td4=tr.appendChild(document.createElement('td'));
+            var td5=tr.appendChild(document.createElement('td'));
+            var td6=tr.appendChild(document.createElement('td'));
+            var td7=tr.appendChild(document.createElement('td'));
+            var td8=tr.appendChild(document.createElement('td'));
+
+            td1.innerHTML +=FirstName;
+            td2.innerHTML +=Surname;
+            td3.innerHTML +=Address;
+            td4.innerHTML +=DOB;
+            td5.innerHTML +=Entry;
+            td6.innerHTML +=Exit;
+            td7.innerHTML +=Gender
+            td8.innerHTML +=Technology;
+            
+
+            document.getElementById("tbl").appendChild(tr);
+        }
+        
+
+        
+ 
+    
+
+  </script>
+
+
+
+</body>
+</html>
